@@ -22,6 +22,9 @@ class Reservacion extends Model
     public function actividad(){
         return $this->hasOne(Actividad::class, 'id', 'actividad_id');
     }
+
+    public $timestamps = false;
+
 }
 
 

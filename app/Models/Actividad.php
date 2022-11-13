@@ -26,4 +26,6 @@ class Actividad extends Model
         return $this->hasMany(Reservacion::class);
     }
 
+    public $timestamps = false;
+
 }

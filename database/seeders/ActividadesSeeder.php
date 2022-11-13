@@ -116,7 +116,7 @@ class ActividadesSeeder extends Seeder
         ]);
 
         Actividad::insert([
-            'imagen' => 'https://universes.art/fileadmin/_migrated/gridelement_uploads',
+            'imagen' => 'https://www.eluniversal.com.mx/sites/default/files/2022/06/01/tour-teotihuacan-hacer-actividades.jpg',
             'titulo' => 'Pirámides de Teotihuacán',
             'descripcion' => 'Teotihuacán es un amplio complejo arqueológico mexicano al noreste de la Ciudad de México donde se encuentran la Pirámide de la Luna y la Pirámide del Sol.',
             'fecha_disponibilidad_inicio' => now(),

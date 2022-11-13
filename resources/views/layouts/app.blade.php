@@ -68,18 +68,18 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-primary">
-                        <li class="nav-item @if (str_contains(Route::current()->getName(), 'actividades')) active @endif">
-                            <a href="{{-- {{ route('direccion.index') }} --}}">
+                        <li class="nav-item @if (Route::current()->getName() == '')) active @endif">
+                            <a href="">
                                 <i class="fas fa-child"></i>
                                 <p>Actividades</p>
                             </a>
                         </li>
-                        <li class="nav-item @if (str_contains(Route::current()->getName(), 'reservaciones')) active @endif">
-                            <a href="{{-- {{ route('busqueda.index') }} --}}">
+                        {{-- <li class="nav-item @if (str_contains(Route::current()->getName(), 'reservaciones')) active @endif">
+                            <a href="">
                                 <i class="fas fa-th-list"></i>
                                 <p>Reservaciónes</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
