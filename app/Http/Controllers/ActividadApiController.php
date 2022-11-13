@@ -24,4 +24,16 @@ class ActividadApiController extends Controller
 
         return response()->json($actividades->get());
     }
+
+    public function detalle (Request $request){
+
+        $actividad = Actividad::find($request->actividad_id);
+
+        $actividades_relacionadas = Actividad::whereIn('id', $actividad->actividades_relacionadas);
+        return response()->json([
+            "actividad" => $actividad,
+            "actividades_relacionadas" => $actividades_relacionadas->get()
+        ]);
+
+    }
 }

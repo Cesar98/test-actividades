@@ -45,13 +45,32 @@
             </div>
         </div>
 
+        <div class="page-inner" id="detalle" style="display: none">
+            <div class="row row-card-no-pd">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <h4 class="card-title">Detalle de la actividad</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12" id="contenidoDetalle">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="page-inner" id="resultados" style="display: none">
             <div class="row row-card-no-pd">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-head-row">
-                                <h4 class="card-title">Ve las actividades que puedes hacer en Toluca</h4>
+                                <h4 class="card-title" id="tituloTabla"></h4>
                             </div>
                         </div>
                         <div class="card-body">
@@ -107,7 +126,9 @@
                     personas: numero_personas
                 },
                 success: (respuesta) => {
-                    construirTabla(respuesta);
+                    construirTabla(respuesta, 'normal');
+
+                    document.getElementById("detalle").style.display = "none";
 
                     document.getElementById("resultados").style.display = "block";
 
@@ -143,16 +164,22 @@
 
         }
 
-        function construirTabla(elementos) {
+        function construirTabla(elementos, forma) {
             let tabla = document.getElementById('contenidoTabla');
             let numero_personas = document.getElementById('numero_personas').value;
 
             let elementohtml = '';
-            if (elementos.length > 0) {
-                elementos.forEach(elemento => {
-                    elementohtml += `<tr height="250">
+
+            switch (forma) {
+                case 'normal':
+
+                    $("#tituloTabla").html('Actividades disponibles en el Estado de México');
+                    if (elementos.length > 0) {
+                        elementos.forEach(elemento => {
+
+                            elementohtml += `<tr height="250">
                                         <td style="text-align:center">
-                                            <img src="${elemento.imagen}" alt="${elemento.titulo}" width="400" height="200">
+                                            <img src="${elemento.imagen}" alt="${elemento.titulo}" width="400" height="200" onclick="generarDetalle(${elemento.id})">
                                         </td>
                                         <td style="text-align:left">
                                             <strong>${elemento.titulo}</strong>
@@ -167,12 +194,41 @@
                                             </button>
                                         </td>
                                     </tr>`;
-                });
-            } else {
-                elementohtml = `<tr>
+                        });
+                    } else {
+                        elementohtml = `<tr>
                                     <td class="text-center" colspan="3">No hay actividades disponibles en la fecha seleccionada.</td>
                                 </tr>`
+                    }
+                    break;
+
+                case 'detalle':
+                    $("#tituloTabla").html('Actividades relacionadas disponibles en el Estado de México');
+                    if (elementos.length > 0) {
+                        elementos.forEach(elemento => {
+
+                            elementohtml += `<tr height="250">
+                                        <td style="text-align:center">
+                                            <img src="${elemento.imagen}" alt="${elemento.titulo}" width="400" height="200" onclick="generarDetalle(${elemento.id})">
+                                        </td>
+                                        <td style="text-align:left">
+                                            <strong>${elemento.titulo}</strong>
+                                        </td>
+                                    </tr>`;
+                        });
+                    } else {
+                        elementohtml = `<tr>
+                                    <td class="text-center" colspan="3">No hay actividades disponibles en la fecha seleccionada.</td>
+                                </tr>`
+                    }
+                    break;
             }
+
+
+
+
+
+
             tabla.innerHTML = elementohtml;
         }
 
@@ -220,6 +276,103 @@
                     });
                 },
             });
+        }
+
+        function generarDetalle(id) {
+
+            let url = window.location.href;
+            url = url.replace('public/', 'public/api/actividad/detalle');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                data: {
+                    actividad_id: id,
+                },
+                success: (respuesta) => {
+                    document.getElementById("detalle").style.display = "block";
+                    construirDetalle(respuesta.actividad);
+                    construirTabla(respuesta.actividades_relacionadas, 'detalle');
+                },
+                error: () => {},
+            });
+        }
+
+        function construirDetalle(elemento) {
+            let div = document.getElementById('contenidoDetalle');
+            let numero_personas = document.getElementById('numero_personas').value;
+            let fecha_busqueda = document.getElementById('fecha_busqueda').value;
+
+            let elementohtml = '';
+
+            elementohtml += `<div class="row justify-content-md-center">
+                                <div class="col-8 col-md-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="${elemento.imagen}"
+                                                alt="${elemento.titulo}" width="100%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-head-row">
+                                                <div class="card-title">${elemento.titulo}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body pb-0">
+                                            <div class="text-center my-2">
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star-half"></span>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <div class="flex-1 pt-1 ml-2">
+                                                    <p>${elemento.descripcion}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <div class="flex-1 pt-1 ml-2">
+                                                    <small>Fecha tentativa: ${fecha_busqueda}</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <div class="flex-1 pt-1 ml-2">
+                                                    <p>Cantidad de personas a asistir: ${numero_personas}</p>
+                                                </div>
+                                                <div class="d-flex ml-auto align-items-center">
+                                                    <h3 class="text-info fw-bold">$ ${elemento.precio_unitario * numero_personas} mxn.</h3>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <div class="col-md-auto">
+                                                    <button class="btn btn-success"
+                                                        onclick="generarReservacion(${elemento.id}, ${numero_personas})">
+                                                        <span class="btn-label">
+                                                            <i class="fa fa-money-check-alt"></i>
+                                                        </span>Comprar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>`;
+
+
+
+            div.innerHTML = elementohtml;
         }
     </script>
 @endsection

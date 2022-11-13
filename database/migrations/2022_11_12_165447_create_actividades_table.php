@@ -22,7 +22,7 @@ class CreateActividadesTable extends Migration
             $table->date('fecha_disponibilidad_fin');
             $table->double('precio_unitario', 10,2);
             $table->integer('popularidad')->unsigned();
-            $table->string('actividades_relacionadas', 255);
+            $table->json('actividades_relacionadas');
         });
     }
 
