@@ -68,18 +68,18 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-primary">
-                        <li class="nav-item @if (Route::current()->getName() == '')) active @endif">
-                            <a href="">
+                        <li class="nav-item active" id="nav_actividades" onclick="cambiarContenido(this)">
+                            <a>
                                 <i class="fas fa-child"></i>
                                 <p>Actividades</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item @if (str_contains(Route::current()->getName(), 'reservaciones')) active @endif">
-                            <a href="">
+                        <li class="nav-item" id="nav_reservaciones" onclick="cambiarContenido(this)">
+                            <a>
                                 <i class="fas fa-th-list"></i>
                                 <p>Reservaciónes</p>
                             </a>
-                        </li> --}}
+                        </li>
                     </ul>
                 </div>
             </div>

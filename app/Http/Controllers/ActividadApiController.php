@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 class ActividadApiController extends Controller
 {
 
-    public function index(){
-        $actividades = Actividad::all();
-        return response()->json([
-            "success" => "true",
-            "results" => $actividades
-        ]);
-    }
-
     public function actividades (Request $request){
 
         $actividades = Actividad::where('fecha_disponibilidad_inicio', '<=', $request->fecha)
@@ -36,4 +28,5 @@ class ActividadApiController extends Controller
         ]);
 
     }
+
 }

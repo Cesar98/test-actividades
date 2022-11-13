@@ -20,7 +20,7 @@ class Reservacion extends Model
     ];
 
     public function actividad(){
-        return $this->hasOne(Actividad::class, 'id', 'actividad_id');
+        return $this->belongsTo(Actividad::class, 'actividad_id', 'id');
     }
 
     public $timestamps = false;

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content">
+    <div class="content" id="content_actividades" style="display: block">
         <div class="col-md-12 my-3">
             <div class="card full-height">
                 <div class="card-header">
@@ -88,6 +88,44 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="content" id="content_reservaciones" style="display: none">
+
+        <div class="page-inner" id="reservaciones">
+            <div class="row row-card-no-pd">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <h4 class="card-title">Reservaciónes realizadas</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12 my-3">
+                                <div class="table-responsive table-hover table-sales">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Título de la actividad</th>
+                                                <th>Fecha de la reservación</th>
+                                                <th>Personas a asistir</th>
+                                                <th>Precio total pagado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contenidoTablaReservaciones">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -223,11 +261,6 @@
                     }
                     break;
             }
-
-
-
-
-
 
             tabla.innerHTML = elementohtml;
         }
@@ -373,6 +406,86 @@
 
 
             div.innerHTML = elementohtml;
+        }
+
+        function cambiarContenido(nav) {
+            let navActividades = document.getElementById("nav_actividades");
+            let navReservaciones = document.getElementById("nav_reservaciones");
+
+            let contentActividades = document.getElementById("content_actividades");
+            let contentReservaciones = document.getElementById("content_reservaciones");
+
+
+            if (nav.id == navActividades.id) {
+                location.reload();
+
+                navActividades.classList.add("active");
+                navReservaciones.classList.remove("active");
+
+                contentActividades.style.display = "block";
+                contentReservaciones.style.display = "none";
+
+            } else {
+                navReservaciones.classList.add("active");
+                navActividades.classList.remove("active");
+
+                contentActividades.style.display = "none";
+                contentReservaciones.style.display = "block";
+
+                generarReservaciones();
+            }
+        }
+
+        function generarReservaciones() {
+
+            let url = window.location.href;
+            url = url.replace('public/', 'public/api/reservaciones');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                data: {},
+                success: (respuesta) => {
+                    console.log(respuesta)
+                    construirReservaciones(respuesta);
+                },
+                error: () => {},
+            });
+        }
+
+        function construirReservaciones(elementos) {
+            let tabla = document.getElementById('contenidoTablaReservaciones');
+            let elementohtml = '';
+            if (elementos.length > 0) {
+                elementos.forEach(elemento => {
+                    elementohtml += `<tr height="250">
+                                        <td style="text-align:center">
+                                            <img src="${elemento.actividad.imagen}" alt="${elemento.actividad.titulo}" width="400" height="200">
+                                        </td>
+                                        <td style="text-align:left">
+                                            ${elemento.actividad.titulo}
+                                        </td>
+                                        <td style="text-align:left">
+                                            ${elemento.fecha_realizacion}
+                                        </td>
+                                        <td style="text-align:left">
+                                            ${elemento.numero_total_personas} personas
+                                        </td>
+                                        <td style="text-align:left">
+                                            $ ${elemento.precio_total} mxn
+                                        </td>
+                                        <td style="text-align:left">
+                                            Cancelar reservacion
+                                        </td>
+                                    </tr>`;
+                });
+            } else {
+                elementohtml = `<tr>
+                                    <td class="text-center" colspan="6">No hay actividades reservadas en este momento.</td>
+                                </tr>`;
+            }
+            tabla.innerHTML = elementohtml;
         }
     </script>
 @endsection
