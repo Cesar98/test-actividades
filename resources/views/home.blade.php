@@ -75,14 +75,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-12 my-3">
-                                <div class="table-responsive table-hover table-sales">
-                                    <table class="table">
-                                        <tbody id="contenidoTabla">
+                            <div class="col-md-12" id="contenidoTabla">
 
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,6 +111,7 @@
 @section('script')
     <script>
         function notificacion(titulo, mensaje, tipo) {
+
             $.notify({
                 icon: tipo == 'danger' ? 'flaticon-cross-1' : 'flaticon-check',
                 title: titulo,
@@ -129,6 +124,35 @@
                 },
                 time: 1000,
             });
+
+        }
+
+        function cambiarContenido(nav) {
+
+            let navActividades = document.getElementById("nav_actividades");
+            let navReservaciones = document.getElementById("nav_reservaciones");
+            let contentActividades = document.getElementById("content_actividades");
+            let contentReservaciones = document.getElementById("content_reservaciones");
+
+            if (nav.id == navActividades.id) {
+                location.reload();
+
+                navActividades.classList.add("active");
+                navReservaciones.classList.remove("active");
+
+                contentActividades.style.display = "block";
+                contentReservaciones.style.display = "none";
+
+            } else {
+                generarReservaciones();
+
+                navReservaciones.classList.add("active");
+                navActividades.classList.remove("active");
+
+                contentActividades.style.display = "none";
+                contentReservaciones.style.display = "block";
+            }
+
         }
 
         function generarBusqueda() {
@@ -142,7 +166,6 @@
             }
 
             let url = window.location.href;
-
             url = url.replace('public/', 'public/api/actividades');
 
             $.ajax({
@@ -165,68 +188,6 @@
                     notificacion('Error', 'Error al generar la búsqueda', 'danger');
                 },
             });
-
-        }
-
-        function construirTablaActividades(elementos, forma) {
-
-            let tabla = document.getElementById('contenidoTabla');
-            let numero_personas = document.getElementById('numero_personas').value;
-            let elemento_html = '';
-
-            if (elementos.length == 0) {
-                let tamanioColspan = forma == 'normal' ? 3 : 2;
-                let mensaje = forma == 'normal' ? 'disponibles' : 'relacionadas';
-
-                elemento_html = `<tr>
-                                    <td class="text-center" colspan="${tamanioColspan}">No hay actividades ${mensaje} en la fecha seleccionada.</td>
-                                </tr>`
-            }
-
-            switch (forma) {
-                case 'normal':
-
-                    elementos.forEach(elemento => {
-                        elemento_html += `<tr height="250">
-                                            <td style="text-align:center">
-                                                <img src="${elemento.imagen}" alt="${elemento.titulo}" width="400" height="200" onclick="generarDetalle(${elemento.id})">
-                                            </td>
-                                            <td style="text-align:left">
-                                                <strong>${elemento.titulo}</strong>
-                                                <br />
-                                                Total: $ ${elemento.precio_unitario * numero_personas} mxn
-                                            </td>
-                                            <td style="text-align:right">
-                                                <button class="btn btn-success" onclick="generarReservacion(${elemento.id}, ${numero_personas})">
-                                                    <span class="btn-label">
-                                                        <i class="fa fa-money-check-alt"></i>
-                                                    </span>Comprar
-                                                </button>
-                                            </td>
-                                        </tr>`;
-                    });
-
-                    break;
-
-                case 'detalle':
-
-                    elementos.forEach(elemento => {
-
-                        elemento_html += `<tr height="250">
-                                            <td style="text-align:center">
-                                                <img src="${elemento.imagen}" alt="${elemento.titulo}" width="400" height="200" onclick="generarDetalle(${elemento.id})">
-                                            </td>
-                                            <td style="text-align:left">
-                                                <strong>${elemento.titulo}</strong>
-                                            </td>
-                                        </tr>`;
-                    });
-
-                    break;
-
-            }
-
-            tabla.innerHTML = elemento_html;
 
         }
 
@@ -260,8 +221,6 @@
                 }
             });
 
-
-
         }
 
         function generarDetalle(id) {
@@ -280,9 +239,147 @@
                     document.getElementById("detalle").style.display = "block";
                     construirDetalle(respuesta.actividad);
                     construirTablaActividades(respuesta.actividades_relacionadas, 'detalle');
+                    $('html, body').animate({ scrollTop: 0 }, 'fast');
                 },
                 error: () => {},
             });
+
+        }
+
+        function generarReservaciones() {
+
+            let url = window.location.href;
+            url = url.replace('public/', 'public/api/reservaciones');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                data: {},
+                success: (respuesta) => {
+                    construirTablaReservaciones(respuesta);
+                }
+            });
+
+        }
+
+        function generarCancelacionReservacion(id) {
+
+            swal({
+                title: "¡Espera!",
+                text: "¿Estás seguro de querer cancelar la reserva?",
+                icon: "info",
+                button: "Sí, estoy seguro",
+            }).then((value) => {
+                if (value) {
+                    let url = window.location.href;
+                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        },
+                        success: (respuesta) => {
+                            notificacion('Éxito', 'Se canceló la reservación', 'success');
+                            generarReservaciones();
+                        }
+                    });
+                }
+            });
+
+        }
+
+        function construirTablaActividades(elementos, forma) {
+
+            let tabla = document.getElementById('contenidoTabla');
+            let numero_personas = document.getElementById('numero_personas').value;
+            let elemento_html = '';
+
+            if (elementos.length == 0) {
+                elemento_html = `<div class="row justify-content-md-center">
+                                    No hay actividades reservadas en este momento.
+                                </div>`;
+            }
+
+            switch (forma) {
+                case 'normal':
+
+                    elementos.forEach(elemento => {
+                        let texto_precio = elemento.precio_unitario == 0 ? 'Es GRATIS!' :
+                            `$ ${elemento.precio_unitario * numero_personas} mxn.`;
+
+                        elemento_html += `<div class="row justify-content-md-center">
+                                                <div class="col-6 col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <img src="${elemento.imagen}"
+                                                                alt="${elemento.titulo}" width="50%"
+                                                                onclick="generarDetalle(${elemento.id})">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-head-row justify-content-md-center">
+                                                                <div class="card-title">${elemento.titulo}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body pb-0">
+                                                            <div class="text-center my-5">
+                                                                <h3 class="text-info fw-bold">${texto_precio}</h3>
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <div class="col-md-auto">
+                                                                    <button class="btn btn-success" onclick="generarReservacion(${elemento.id}, ${numero_personas})">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-money-check-alt"></i>
+                                                            </span>
+                                                            Comprar
+                                                        </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                    });
+
+                    break;
+
+                case 'detalle':
+
+                    elementos.forEach(elemento => {
+                        let texto_precio = elemento.precio_unitario == 0 ? 'Es GRATIS!' :
+                            `$ ${elemento.precio_unitario * numero_personas} mxn.`;
+
+                        elemento_html += `<div class="row justify-content-md-center">
+                                                <div class="col-6 col-md-6" style="display: flex; justify-content: center; align-items: center;">
+                                                    <div class="card text-center">
+                                                        <div class="card-title">${elemento.titulo}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <img src="${elemento.imagen}"
+                                                                alt="${elemento.titulo}" width="50%"
+                                                                onclick="generarDetalle(${elemento.id})">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                    });
+
+                    break;
+
+            }
+
+            tabla.innerHTML = elemento_html;
+
         }
 
         function construirDetalle(elemento) {
@@ -355,51 +452,6 @@
 
         }
 
-        function cambiarContenido(nav) {
-
-            let navActividades = document.getElementById("nav_actividades");
-            let navReservaciones = document.getElementById("nav_reservaciones");
-            let contentActividades = document.getElementById("content_actividades");
-            let contentReservaciones = document.getElementById("content_reservaciones");
-
-            if (nav.id == navActividades.id) {
-                location.reload();
-
-                navActividades.classList.add("active");
-                navReservaciones.classList.remove("active");
-
-                contentActividades.style.display = "block";
-                contentReservaciones.style.display = "none";
-
-            } else {
-                generarReservaciones();
-
-                navReservaciones.classList.add("active");
-                navActividades.classList.remove("active");
-
-                contentActividades.style.display = "none";
-                contentReservaciones.style.display = "block";
-            }
-
-        }
-
-        function generarReservaciones() {
-
-            let url = window.location.href;
-            url = url.replace('public/', 'public/api/reservaciones');
-
-            $.ajax({
-                url: url,
-                type: "GET",
-                dataType: "json",
-                data: {},
-                success: (respuesta) => {
-                    construirTablaReservaciones(respuesta);
-                }
-            });
-
-        }
-
         function construirTablaReservaciones(elementos) {
 
             let tabla = document.getElementById('contenidoTablaReservaciones');
@@ -408,9 +460,9 @@
             let elemento_html = '';
 
             if (elementos.length == 0) {
-                elemento_html = `<tr>
-                                    <td class="text-center" colspan="6">No hay actividades reservadas en este momento.</td>
-                                </tr>`;
+                elemento_html = `<div class="row justify-content-md-center">
+                                    No hay actividades reservadas en este momento.
+                                </div>`;
             }
 
             elementos.forEach(elemento => {
@@ -420,93 +472,64 @@
                     'persona' : 'personas';
 
                 elemento_html += `<div class="row justify-content-md-center">
-                                <div class="col-6 col-md-6">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="${elemento.actividad.imagen}"
-                                                alt="${elemento.actividad.titulo}" width="70%">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="card-head-row">
-                                                <div class="card-title">${elemento.actividad.titulo}</div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body pb-0">
-                                            <div class="text-center my-2">
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star-half"></span>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="flex-1 pt-1 ml-2">
-                                                    <p>${elemento.actividad.descripcion}</p>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="flex-1 pt-1 ml-2">
-                                                    <small>Fecha a asistir: ${fecha_busqueda}</small>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="flex-1 pt-1 ml-2">
-                                                    <p>Total de personas a asistir: ${numero_personas}</p>
-                                                </div>
-                                                <div class="d-flex ml-auto align-items-center">
-                                                    <h3 class="text-info fw-bold">${texto_precio}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="text-center">
-                                                <div class="col-md-auto">
-                                                    <button class="btn btn-danger"
-                                                        onclick="generarCancelacionReservacion(${elemento.id})">
-                                                        <span class="btn-label">
-                                                            <i class="far fa-calendar-times"></i>
-                                                        </span>
-                                                        Cancelar
-                                                    </button>
+                                        <div class="col-6 col-md-6">
+                                            <div class="card">
+                                                <div class="card-body text-center">
+                                                    <img src="${elemento.actividad.imagen}"
+                                                        alt="${elemento.actividad.titulo}" width="70%">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>`;
+                                        <div class="col-6 col-md-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-head-row">
+                                                        <div class="card-title">${elemento.actividad.titulo}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body pb-0">
+                                                    <div class="text-center my-2">
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star-half"></span>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="flex-1 pt-1 ml-2">
+                                                            <p>${elemento.actividad.descripcion}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="flex-1 pt-1 ml-2">
+                                                            <small>Fecha a asistir: ${fecha_busqueda}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="flex-1 pt-1 ml-2">
+                                                            <p>Total de personas a asistir: ${numero_personas}</p>
+                                                        </div>
+                                                        <div class="d-flex ml-auto align-items-center">
+                                                            <h3 class="text-info fw-bold">${texto_precio}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div class="col-md-auto">
+                                                            <button class="btn btn-danger"
+                                                                onclick="generarCancelacionReservacion(${elemento.id})">
+                                                                <span class="btn-label">
+                                                                    <i class="far fa-calendar-times"></i>
+                                                                </span>
+                                                                Cancelar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
             });
 
             tabla.innerHTML = elemento_html;
-
-        }
-
-        function generarCancelacionReservacion(id) {
-
-            swal({
-                title: "¡Espera!",
-                text: "¿Estás seguro de querer cancelar la reserva?",
-                icon: "info",
-                button: "Sí, estoy seguro",
-            }).then((value) => {
-                if (value) {
-                    let url = window.location.href;
-                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
-
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            id: id
-                        },
-                        success: (respuesta) => {
-                            notificacion('Éxito', 'Se canceló la reservación', 'success');
-                            generarReservaciones();
-                        }
-                    });
-                }
-            });
 
         }
     </script>
