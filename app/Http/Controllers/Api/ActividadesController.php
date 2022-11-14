@@ -21,13 +21,11 @@ class ActividadesController extends Controller
 
         $actividad = Actividad::find($request->actividad_id);
 
-        $ids_relacionadas = json_decode($actividad->actividades_relacionadas);
-
-        $actividades_relacionadas = Actividad::find($ids_relacionadas);
+        $actividades_relacionadas = Actividad::whereIn('id', $actividad->actividades_relacionadas);
 
         return response()->json([
             "actividad" => $actividad,
-            "actividades_relacionadas" => $actividades_relacionadas
+            "actividades_relacionadas" => $actividades_relacionadas->get()
         ]);
 
     }
