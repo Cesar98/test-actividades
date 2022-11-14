@@ -31,4 +31,13 @@ class ReservacionApiController extends Controller
         ]);
     }
 
+    public function cancelar (Request $request){
+        $reservacion = Reservacion::find($request->id);
+        $reservacion->delete();
+
+        return response()->json([
+            "success" => "true"
+        ]);
+    }
+
 }

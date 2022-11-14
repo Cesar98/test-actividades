@@ -24,4 +24,5 @@ Route::get('/actividades', [ActividadApiController::class, 'actividades'] );
 Route::get('/actividad/detalle', [ActividadApiController::class, 'detalle'] );
 Route::get('/reservar', [ReservacionApiController::class, 'reservar'] );
 Route::get('/reservaciones', [ReservacionApiController::class, 'index'] );
+Route::get('/reservaciones/cancelar', [ReservacionApiController::class, 'cancelar'] );
 
