@@ -166,7 +166,7 @@
             }
 
             let url = window.location.href;
-            url = url.replace('public/', 'public/api/actividades');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
 
             $.ajax({
                 url: url,
@@ -203,7 +203,7 @@
                     let fecha_busqueda = document.getElementById('fecha_busqueda').value;
                     let url = window.location.href;
 
-                    url = url.replace('public/', 'public/api/reservar');
+                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservar');
 
                     $.ajax({
                         url: url,
@@ -226,7 +226,7 @@
         function generarDetalle(id) {
 
             let url = window.location.href;
-            url = url.replace('public/', 'public/api/actividad/detalle');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividad/detalle');
 
             $.ajax({
                 url: url,
@@ -249,7 +249,7 @@
         function generarReservaciones() {
 
             let url = window.location.href;
-            url = url.replace('public/', 'public/api/reservaciones');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones');
 
             $.ajax({
                 url: url,
@@ -273,7 +273,7 @@
             }).then((value) => {
                 if (value) {
                     let url = window.location.href;
-                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
+                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones/cancelar');
 
                     $.ajax({
                         url: url,
