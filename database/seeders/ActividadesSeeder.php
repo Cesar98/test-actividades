@@ -24,7 +24,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[]'
+            'actividades_relacionadas' => json_encode('[]')
         ]);
 
         Actividad::insert([
@@ -35,7 +35,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[10, 9, 8, 7]'
+            'actividades_relacionadas' => json_encode('[10, 9, 8, 7]')
         ]);
 
         Actividad::insert([
@@ -46,7 +46,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 200,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[9, 8, 7]'
+            'actividades_relacionadas' => json_encode('[9, 8, 7]')
         ]);
 
         Actividad::insert([
@@ -57,7 +57,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 400,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[]'
+            'actividades_relacionadas' => json_encode('[]')
         ]);
 
         Actividad::insert([
@@ -68,7 +68,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 50,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[6]'
+            'actividades_relacionadas' => json_encode('[6]')
         ]);
 
         Actividad::insert([
@@ -79,7 +79,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[5]'
+            'actividades_relacionadas' => json_encode('[5]')
         ]);
 
         Actividad::insert([
@@ -90,7 +90,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[9, 8]'
+            'actividades_relacionadas' => json_encode('[9, 8]')
         ]);
 
         Actividad::insert([
@@ -101,7 +101,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[9, 7]'
+            'actividades_relacionadas' => json_encode('[9, 7]')
         ]);
 
         Actividad::insert([
@@ -112,7 +112,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 0,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[8, 7]'
+            'actividades_relacionadas' => json_encode('[8, 7]')
         ]);
 
         Actividad::insert([
@@ -123,7 +123,7 @@ class ActividadesSeeder extends Seeder
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
             'precio_unitario' => 200,
             'popularidad' => random_int(70, 100),
-            'actividades_relacionadas' => '[9, 8, 7]'
+            'actividades_relacionadas' => json_encode('[9, 8, 7]')
         ]);
 
     }
