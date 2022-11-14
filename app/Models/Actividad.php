@@ -22,10 +22,6 @@ class Actividad extends Model
         'actividades_relacionadas'
     ];
 
-    protected $casts = [
-        'actividades_relacionadas' => 'array'
-    ];
-
     public function reservaciones (){
         return $this->hasMany(Reservacion::class);
     }

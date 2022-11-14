@@ -20,7 +20,7 @@ class ActividadesController extends Controller
     public function detalle (Request $request){
 
         $actividad = Actividad::find($request->actividad_id);
-        $actividades_relacionadas = Actividad::find(array($actividad->actividades_relacionadas));
+        $actividades_relacionadas = Actividad::find(json_decode($actividad->actividades_relacionadas));
 
         return response()->json([
             "actividad" => $actividad,
