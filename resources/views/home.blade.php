@@ -166,6 +166,7 @@
             }
 
             let url = window.location.href;
+            console.log(url);
             url = url.replace('public/', 'public/api/actividades');
 
             $.ajax({
