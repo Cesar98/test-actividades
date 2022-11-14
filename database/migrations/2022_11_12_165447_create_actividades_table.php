@@ -15,14 +15,14 @@ class CreateActividadesTable extends Migration
     {
         Schema::create('actividades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('imagen');
+            $table->string('imagen', 255);
             $table->string('titulo', 64);
             $table->string('descripcion', 255);
             $table->date('fecha_disponibilidad_inicio');
             $table->date('fecha_disponibilidad_fin');
             $table->double('precio_unitario', 10,2);
             $table->integer('popularidad')->unsigned();
-            $table->json('actividades_relacionadas');
+            $table->string('actividades_relacionadas');
         });
     }
 
