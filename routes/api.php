@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ActividadApiController;
-use App\Http\Controllers\ReservacionApiController;
+/* use App\Http\Controllers\Api\ActividadApiController;
+use App\Http\Controllers\Api\ReservacionApiController; */
+
+use App\Http\Controllers\Api\ActividadesController;
+use App\Http\Controllers\Api\ReservacionesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/actividades', [ActividadApiController::class, 'actividades'] );
-Route::get('/actividad/detalle', [ActividadApiController::class, 'detalle'] );
-Route::get('/reservar', [ReservacionApiController::class, 'reservar'] );
-Route::get('/reservaciones', [ReservacionApiController::class, 'index'] );
-Route::get('/reservaciones/cancelar', [ReservacionApiController::class, 'cancelar'] );
+Route::get('/actividades', [ActividadesController::class, 'actividades'] );
+Route::get('/actividad/detalle', [ActividadesController::class, 'detalle'] );
+Route::get('/reservar', [ReservacionesController::class, 'reservar'] );
+Route::get('/reservaciones', [ReservacionesController::class, 'index'] );
+Route::get('/reservaciones/cancelar', [ReservacionesController::class, 'cancelar'] );
 

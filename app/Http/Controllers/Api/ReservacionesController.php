@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Actividad;
 use App\Models\Reservacion;
 use Illuminate\Http\Request;
 
-class ReservacionApiController extends Controller
+class ReservacionesController extends Controller
 {
-
     public function index () {
         $reservaciones = Reservacion::with('actividad')->orderBy('fecha_realizacion');
+
         return response()->json($reservaciones->get());
     }
 
@@ -39,5 +40,4 @@ class ReservacionApiController extends Controller
             "success" => "true"
         ]);
     }
-
 }
