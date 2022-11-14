@@ -238,6 +238,7 @@
                 success: (respuesta) => {
                     document.getElementById("detalle").style.display = "block";
                     construirDetalle(respuesta.actividad);
+                    console.log(respuesta.actividades_relacionadas);
                     construirTablaActividades(respuesta.actividades_relacionadas, 'detalle');
                     $('html, body').animate({ scrollTop: 0 }, 'fast');
                 },
