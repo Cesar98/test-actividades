@@ -24,7 +24,7 @@ class ActividadesController extends Controller
 
         return response()->json([
             "actividad" => $actividad,
-            "actividades_relacionadas" => $actividades_relacionadas->get()
+            "actividades_relacionadas" => /* $actividades_relacionadas->get() */ $actividad->actividades_relacionadas
         ]);
 
     }
