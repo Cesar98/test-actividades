@@ -24,7 +24,7 @@ class ActividadesController extends Controller
 
         return response()->json([
             "actividad" => $actividad,
-            "actividades_relacionadas" => gettype($actividad->actividades_relacionadas)/* $actividades_relacionadas */
+            "actividades_relacionadas" => gettype(json_decode($actividad->actividades_relacionadas))/* $actividades_relacionadas */
         ]);
 
     }
