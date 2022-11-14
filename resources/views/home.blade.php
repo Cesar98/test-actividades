@@ -167,7 +167,7 @@
 
             let url = window.location.href;
             console.log(url);
-            url = url.replace('public/', 'public/api/actividades');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
 
             $.ajax({
                 url: url,
