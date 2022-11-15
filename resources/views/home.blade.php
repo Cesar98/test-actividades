@@ -170,7 +170,7 @@
             }
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com', 'herokuapp.comapi/actividades');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
 
             $.ajax({
                 url: url,
@@ -207,7 +207,7 @@
                     let fecha_busqueda = document.getElementById('fecha_busqueda').value;
                     let url = window.location.href;
 
-                    url = url.replace('herokuapp.com', 'herokuapp.comapi/reservar');
+                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservar');
 
                     $.ajax({
                         url: url,
@@ -230,7 +230,7 @@
         function generarDetalle(id) {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com', 'herokuapp.comapi/actividad/detalle');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividad/detalle');
 
             $.ajax({
                 url: url,
@@ -255,7 +255,7 @@
         function generarReservaciones() {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com', 'herokuapp.comapi/reservaciones');
+            url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones');
 
             $.ajax({
                 url: url,
@@ -279,7 +279,7 @@
             }).then((value) => {
                 if (value) {
                     let url = window.location.href;
-                    url = url.replace('herokuapp.com', 'herokuapp.comapi/reservaciones/cancelar');
+                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones/cancelar');
 
                     $.ajax({
                         url: url,
