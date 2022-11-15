@@ -173,13 +173,18 @@
             let fecha_busqueda = document.getElementById('fecha_busqueda').value;
             let numero_personas = document.getElementById('numero_personas').value;
 
-            if (numero_personas <= 0 || Number.isInteger(numero_personas)) {
-                notificacion('Error', 'El total de personas a asistir debe ser un número entero y mayor a 0', 'danger')
+            if (numero_personas <= 0 || numero_personas % 1 != 0) {
+                notificacion('Error', 'El total de personas a asistir debe ser un número mayor a 0', 'danger')
+                document.getElementById("detalle").style.display = "none";
+                    document.getElementById("resultados").style.display = "none";
                 return;
             }
 
             if (fecha_busqueda < Date.now()) {
                 notificacion('Error', 'La fecha debe ser una fecha valida o mayor a hoy', 'danger')
+                cambiarContenido(navActividades.id);
+                document.getElementById("detalle").style.display = "none";
+                    document.getElementById("resultados").style.display = "none";
                 return;
             }
 
