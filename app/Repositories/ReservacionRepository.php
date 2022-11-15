@@ -16,7 +16,7 @@ class ReservacionRepository
 
     public function reservaciones()
     {
-        $reservaciones = $this->model->with('actividad');
+        $reservaciones = $this->model->with('actividad')->orderBy('id', 'desc');
         return $reservaciones->get();
     }
 
