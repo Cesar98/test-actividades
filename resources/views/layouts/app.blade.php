@@ -76,7 +76,7 @@
                                 <p>Actividades</p>
                             </a>
                         </li>
-                        <li class="nav-item" id="nav_reservaciones" onclick="cambiarContenido(this)">
+                        <li class="nav-item sidenav-toggler" id="nav_reservaciones" onclick="cambiarContenido(this)">
                             <a>
                                 <i class="fas fa-th-list"></i>
                                 <p>Reservaciónes</p>

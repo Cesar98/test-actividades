@@ -173,13 +173,19 @@
             let fecha_busqueda = document.getElementById('fecha_busqueda').value;
             let numero_personas = document.getElementById('numero_personas').value;
 
-            if (numero_personas <= 0) {
-                notificacion('Error', 'El total de personas a asistir debe ser un número mayor a 0', 'danger')
+            if (numero_personas <= 0 || Number.isInteger(numero_personas)) {
+                notificacion('Error', 'El total de personas a asistir debe ser un número entero y mayor a 0', 'danger')
                 return;
             }
 
+            if (fecha_busqueda < Date.now()) {
+                notificacion('Error', 'La fecha debe ser una fecha valida o mayor a hoy', 'danger')
+                return;
+            }
+
+
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
+            url = url.replace('public/', 'public/api/actividades');
 
             $.ajax({
                 url: url,
@@ -218,7 +224,7 @@
                     let fecha_busqueda = document.getElementById('fecha_busqueda').value;
                     let url = window.location.href;
 
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservar');
+                    url = url.replace('public/', 'public/api/reservar');
 
                     $.ajax({
                         url: url,
@@ -243,7 +249,7 @@
 
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividad/detalle');
+            url = url.replace('public/', 'public/api/actividad/detalle');
 
             $.ajax({
                 url: url,
@@ -267,7 +273,7 @@
         function generarReservaciones() {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones');
+            url = url.replace('public/', 'public/api/reservaciones');
 
             $.ajax({
                 url: url,
@@ -294,7 +300,7 @@
             }).then((value) => {
                 if (value) {
                     let url = window.location.href;
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones/cancelar');
+                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
 
                     $.ajax({
                         url: url,
@@ -336,7 +342,7 @@
                             `$ ${elemento.precio_unitario} mxn.`;
 
                         let texto_precio_total = elemento.precio_unitario == 0 ? 'Es GRATIS!' :
-                            `$ ${elemento.precio_unitario * numero_personas} mxn.`;
+                            `$ ${Math.round(elemento.precio_unitario * numero_personas * 100) / 100} mxn.`;
 
                         elemento_html += `<div class="col-md-6">
                                                 <div class="card">
@@ -432,7 +438,7 @@
                 `$ ${elemento.precio_unitario} mxn.`;
 
             let texto_precio_total = elemento.precio_unitario == 0 ? 'Es GRATIS!' :
-                `$ ${elemento.precio_unitario * numero_personas} mxn.`;
+                `$ ${Math.round(elemento.precio_unitario * numero_personas * 100) / 100} mxn.`;
 
             let texto_personas = numero_personas == 1 ?
                 'persona' : 'personas';
@@ -512,7 +518,7 @@
                 let texto_precio = elemento.actividad.precio_unitario == 0 ? 'Fue GRATIS!' :
                     `$ ${elemento.actividad.precio_unitario} mxn.`;
                 let texto_precio_total = elemento.precio_total == 0 ? 'Fue GRATIS!' :
-                    `$ ${elemento.precio_total} mxn.`;
+                    `$ ${Math.round(elemento.precio_total * 100) / 100} mxn.`;
                 let texto_personas = elemento.numero_total_personas == 1 ?
                     'persona' : 'personas';
 
