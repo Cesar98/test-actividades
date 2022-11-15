@@ -306,7 +306,7 @@
 
             if (elementos.length == 0) {
                 elemento_html = `<div class="row justify-content-md-center">
-                                    No hay actividades reservadas en este momento.
+                                    No hay actividades relacionadas en este momento.
                                 </div>`;
             }
 
