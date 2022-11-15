@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content" id="content_actividades" style="display: block">
-        <div class="col-md-6 m-auto">
+        <div class="col-md-10 m-auto">
             <div class="card full-height">
                 <div class="card-header">
                     <div class="card-head-row justify-content-md-center">
@@ -12,14 +12,17 @@
                 <div class="card-body">
                     {!! BootForm::open() !!}
                     <div class="row justify-content-md-center">
-                        <div class="col col-lg-3">
+                        <div class="col col-lg-4">
                             <div class="form-group">
                                 <label class="control-label" for="fecha_busqueda">¿Qué día quieres explorar?</label>
                                 <input type="date" name="fecha_busqueda" min={!! now() !!}
                                     value={!! now() !!} id="fecha_busqueda" class="form-control">
                             </div>
                         </div>
-                        <div class="col col-lg-3">
+                    </div>
+
+                    <div class="row justify-content-md-center">
+                        <div class="col col-lg-4">
                             <div class="form-group">
                                 <label class="control-label" for="numero_personas">¿Cuántas personas más vienen
                                     contigo?</label>
@@ -166,7 +169,7 @@
             }
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
+            url = url.replace('public/', 'public/api/actividades');
 
             $.ajax({
                 url: url,
@@ -203,7 +206,7 @@
                     let fecha_busqueda = document.getElementById('fecha_busqueda').value;
                     let url = window.location.href;
 
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservar');
+                    url = url.replace('public/', 'public/api/reservar');
 
                     $.ajax({
                         url: url,
@@ -226,7 +229,7 @@
         function generarDetalle(id) {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividad/detalle');
+            url = url.replace('public/', 'public/api/actividad/detalle');
 
             $.ajax({
                 url: url,
@@ -239,7 +242,9 @@
                     document.getElementById("detalle").style.display = "block";
                     construirDetalle(respuesta.actividad);
                     construirTablaActividades(respuesta.actividades_relacionadas, 'detalle');
-                    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 'fast');
                 },
                 error: () => {},
             });
@@ -249,7 +254,7 @@
         function generarReservaciones() {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones');
+            url = url.replace('public/', 'public/api/reservaciones');
 
             $.ajax({
                 url: url,
@@ -273,7 +278,7 @@
             }).then((value) => {
                 if (value) {
                     let url = window.location.href;
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones/cancelar');
+                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
 
                     $.ajax({
                         url: url,
