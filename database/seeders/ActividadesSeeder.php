@@ -22,7 +22,7 @@ class ActividadesSeeder extends Seeder
             'descripcion' => 'Jardín botánico con hermosos vitrales y más de 400 distintas especies de plantas.',
             'fecha_disponibilidad_inicio' => now(),
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
-            'precio_unitario' => 0,
+            'precio_unitario' => 20,
             'popularidad' => random_int(70, 100),
             'actividades_relacionadas' => '[]'
         ]);
@@ -33,7 +33,7 @@ class ActividadesSeeder extends Seeder
             'descripcion' => 'Parque nacional en un volcán dormido con hermosos lagos para visitar.',
             'fecha_disponibilidad_inicio' => now(),
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
-            'precio_unitario' => 0,
+            'precio_unitario' => 50,
             'popularidad' => random_int(70, 100),
             'actividades_relacionadas' => '[10, 9, 8, 7]'
         ]);
@@ -77,7 +77,7 @@ class ActividadesSeeder extends Seeder
             'descripcion' => 'Centro cultural con hermosos museos y actividades en días festivos, así como también cuentan con cursos diversos de cultura para la población aledaña.',
             'fecha_disponibilidad_inicio' => now(),
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
-            'precio_unitario' => 0,
+            'precio_unitario' => 100,
             'popularidad' => random_int(70, 100),
             'actividades_relacionadas' => '[5]'
         ]);
@@ -88,7 +88,7 @@ class ActividadesSeeder extends Seeder
             'descripcion' => 'Hermoso parque para disfrutar con la familia, cuenta con un auditorio, lagunas, canchas de deportes y juegos para divertirse.',
             'fecha_disponibilidad_inicio' => now(),
             'fecha_disponibilidad_fin' => now()->addDays(random_int(1,10)),
-            'precio_unitario' => 0,
+            'precio_unitario' => 10,
             'popularidad' => random_int(70, 100),
             'actividades_relacionadas' => '[9, 8]'
         ]);

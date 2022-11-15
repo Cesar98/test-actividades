@@ -321,7 +321,7 @@
                                                     <div class="card">
                                                         <div class="card-body text-center">
                                                             <img src="${elemento.imagen}"
-                                                                alt="${elemento.titulo}" width="50%"
+                                                                alt="${elemento.titulo}" width="70%"
                                                                 onclick="generarDetalle(${elemento.id})">
                                                         </div>
                                                     </div>
@@ -397,15 +397,15 @@
                 `$ ${elemento.precio_unitario * numero_personas} mxn.`;
 
             elemento_html += `<div class="row justify-content-md-center">
-                                <div class="col-6 col-md-6">
+                                <div class="col-6 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <img src="${elemento.imagen}"
-                                                alt="${elemento.titulo}" width="70%">
+                                                alt="${elemento.titulo}" width="100%">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-6">
+                                <div class="col-6 col-md-6 col-sm-6">
                                     <div class="card">
                                         <div class="card-header">
                                             <div class="card-head-row">
@@ -431,7 +431,7 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div class="flex-1 pt-1 ml-2">
-                                                    <p>Cantidad de personas a asistir: ${numero_personas}</p>
+                                                    <small>Cantidad de personas a asistir: ${numero_personas}</small>
                                                 </div>
                                                 <div class="d-flex ml-auto align-items-center">
                                                     <h3 class="text-info fw-bold">${texto_precio}</h3>
