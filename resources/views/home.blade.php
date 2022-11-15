@@ -170,7 +170,7 @@
             }
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividades');
+            url = url.replace('public/', 'public/api/actividades');
 
             $.ajax({
                 url: url,
@@ -207,7 +207,7 @@
                     let fecha_busqueda = document.getElementById('fecha_busqueda').value;
                     let url = window.location.href;
 
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservar');
+                    url = url.replace('public/', 'public/api/reservar');
 
                     $.ajax({
                         url: url,
@@ -230,7 +230,7 @@
         function generarDetalle(id) {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/actividad/detalle');
+            url = url.replace('public/', 'public/api/actividad/detalle');
 
             $.ajax({
                 url: url,
@@ -255,7 +255,7 @@
         function generarReservaciones() {
 
             let url = window.location.href;
-            url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones');
+            url = url.replace('public/', 'public/api/reservaciones');
 
             $.ajax({
                 url: url,
@@ -279,7 +279,7 @@
             }).then((value) => {
                 if (value) {
                     let url = window.location.href;
-                    url = url.replace('herokuapp.com/', 'herokuapp.com/api/reservaciones/cancelar');
+                    url = url.replace('public/', 'public/api/reservaciones/cancelar');
 
                     $.ajax({
                         url: url,
@@ -514,12 +514,15 @@
                                                     </div>
                                                     <div class="d-flex">
                                                         <div class="flex-1 pt-1 ml-2">
-                                                            <p>Total de personas a asistir: ${numero_personas}</p>
-                                                        </div>
-                                                        <div class="d-flex ml-auto align-items-center">
-                                                            <h3 class="text-info fw-bold">${texto_precio}</h3>
+                                                            <small>Total de personas a asistir: ${numero_personas}</small>
                                                         </div>
                                                     </div>
+                                                    <div class="d-flex">
+
+<div class="d-flex ml-auto align-items-center">
+    <h3 class="text-info fw-bold">${texto_precio}</h3>
+</div>
+</div>
                                                     <div class="text-center">
                                                         <div class="col-md-auto">
                                                             <button class="btn btn-danger"
