@@ -133,11 +133,12 @@
         function cambiarContenido(nav) {
 
             let navActividades = document.getElementById("nav_actividades");
+            let aActividades = document.getElementById("a_actividades");
             let navReservaciones = document.getElementById("nav_reservaciones");
             let contentActividades = document.getElementById("content_actividades");
             let contentReservaciones = document.getElementById("content_reservaciones");
 
-            if (nav.id == navActividades.id) {
+            if (nav.id == navActividades.id || nav.id == aActividades.id) {
                 location.reload();
 
                 navActividades.classList.add("active");
@@ -319,7 +320,7 @@
                         elemento_html += `<div class="row justify-content-md-center">
                                                 <div class="col-6 col-md-6">
                                                     <div class="card">
-                                                        <div class="card-body text-center">
+                                                        <div class="card-body text-center style="display: flex; justify-content: center; align-items: center;"">
                                                             <img src="${elemento.imagen}"
                                                                 alt="${elemento.titulo}" width="70%"
                                                                 onclick="generarDetalle(${elemento.id})">
@@ -333,8 +334,8 @@
                                                                 <div class="card-title">${elemento.titulo}</div>
                                                             </div>
                                                         </div>
-                                                        <div class="card-body pb-0">
-                                                            <div class="text-center my-5">
+                                                        <div class="card-body">
+                                                            <div class="text-center my-auto">
                                                                 <h3 class="text-info fw-bold">${texto_precio}</h3>
                                                             </div>
                                                             <div class="text-center">
@@ -433,6 +434,8 @@
                                                 <div class="flex-1 pt-1 ml-2">
                                                     <small>Cantidad de personas a asistir: ${numero_personas}</small>
                                                 </div>
+                                            </div>
+                                            <div class="d-flex">
                                                 <div class="d-flex ml-auto align-items-center">
                                                     <h3 class="text-info fw-bold">${texto_precio}</h3>
                                                 </div>

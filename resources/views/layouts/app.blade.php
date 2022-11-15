@@ -42,7 +42,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark2">
 
-                <a href="https://themekita.com/demo-atlantis-lite-bootstrap/#" class="logo">
+                <a id="a_actividades" onclick="cambiarContenido(this)" class="logo">
                     <img src="{{ asset('assets/img/logo.svg') }}" alt="Atlantis lite logo" class="navbar-brand">
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
