@@ -3,41 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Actividad;
-use App\Models\Reservacion;
+use App\Repositories\ReservacionRepository;
 use Illuminate\Http\Request;
 
 class ReservacionesController extends Controller
 {
-    public function index () {
-        $reservaciones = Reservacion::with('actividad')->orderBy('fecha_realizacion');
-
-        return response()->json($reservaciones->get());
+    public function __construct(ReservacionRepository $reservacionRepository)
+    {
+        $this->reservacionRepository = $reservacionRepository;
     }
 
-    public function reservar (Request $request){
-
-        $actividad = Actividad::find($request->actividad_id);
-
-        Reservacion::create([
-            'actividad_id' => $request->actividad_id,
-            'numero_total_personas' => $request->personas,
-            'precio_total' => $actividad->precio_unitario * $request->personas,
-            'fecha_reservacion' => now(),
-            'fecha_realizacion' => $request->fecha
-        ]);
-
-        return response()->json([
-            "success" => "true"
-        ]);
+    public function reservaciones()
+    {
+        return response()->json($this->reservacionRepository->reservaciones());
     }
 
-    public function cancelar (Request $request){
-        $reservacion = Reservacion::find($request->id);
-        $reservacion->delete();
+    public function reservar(Request $request)
+    {
+        return response()->json($this->reservacionRepository->reservar($request));
+    }
 
-        return response()->json([
-            "success" => "true"
-        ]);
+    public function cancelar(Request $request)
+    {
+        return response()->json($this->reservacionRepository->cancelar($request));
     }
 }

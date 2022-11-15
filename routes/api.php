@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/actividades', [ActividadesController::class, 'actividades'] );
 Route::get('/actividad/detalle', [ActividadesController::class, 'detalle'] );
+Route::get('/reservaciones', [ReservacionesController::class, 'reservaciones'] );
 Route::get('/reservar', [ReservacionesController::class, 'reservar'] );
-Route::get('/reservaciones', [ReservacionesController::class, 'index'] );
 Route::get('/reservaciones/cancelar', [ReservacionesController::class, 'cancelar'] );
+
 

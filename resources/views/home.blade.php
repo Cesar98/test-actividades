@@ -276,6 +276,9 @@
                 data: {},
                 success: (respuesta) => {
                     construirTablaReservaciones(respuesta);
+                },
+                error: () => {
+                    console.log('no llega');
                 }
             });
 
